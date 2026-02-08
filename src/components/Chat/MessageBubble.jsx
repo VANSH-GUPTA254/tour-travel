@@ -4,18 +4,27 @@ function MessageBubble({ text, sender }) {
   return (
     <div
       style={{
-        maxWidth: "75%",
-        padding: "10px 14px",
-        marginBottom: "10px",
-        borderRadius: "12px",
-        alignSelf: isUser ? "flex-end" : "flex-start",
-        backgroundColor: isUser ? "#2563eb" : "#e5e7eb",
-        color: isUser ? "#fff" : "#000",
-        whiteSpace: "pre-wrap",
-        wordBreak: "break-word",
+        display: "flex",
+        justifyContent: isUser ? "flex-end" : "flex-start",
+        marginBottom: "12px",
       }}
     >
-      {text}
+      <div
+        style={{
+          maxWidth: "75%",
+          padding: "12px 16px",
+          borderRadius: isUser
+            ? "18px 18px 4px 18px"
+            : "18px 18px 18px 4px",
+          background: isUser ? "#2563eb" : "#ffffff",
+          color: isUser ? "#fff" : "#111",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+          whiteSpace: "pre-wrap",
+          lineHeight: "1.4",
+        }}
+      >
+        {text}
+      </div>
     </div>
   );
 }

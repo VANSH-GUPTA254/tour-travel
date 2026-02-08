@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import MessageBubble from "./MessageBubble";
 import ChatInput from "./ChatInput";
 import HotelCard from "./HotelCard";
+import ChatHeader from "./ChatHeader";
 import { hotels } from "../../data/hotels";
 
 function ChatWindow() {
@@ -16,6 +17,13 @@ function ChatWindow() {
     people: "",
     hotel: null,
   });
+
+  const bottomRef = useRef(null);
+
+  // 🔽 Auto scroll on new message
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const handleSend = (userMessage) => {
     setMessages((prev) => [
@@ -85,7 +93,17 @@ Your trip is planned 🎉
         backgroundColor: "#f5f7fa",
       }}
     >
-      <div style={{ flex: 1, padding: "20px", overflowY: "auto" }}>
+      {/* HEADER */}
+      <ChatHeader />
+
+      {/* CHAT AREA */}
+      <div
+        style={{
+          flex: 1,
+          padding: "20px",
+          overflowY: "auto",
+        }}
+      >
         {messages.map((msg, i) => (
           <div key={i}>
             {msg.text && (
@@ -102,8 +120,10 @@ Your trip is planned 🎉
               ))}
           </div>
         ))}
+        <div ref={bottomRef} />
       </div>
 
+      {/* INPUT */}
       <ChatInput onSend={handleSend} disabled={stage === "done"} />
     </div>
   );
